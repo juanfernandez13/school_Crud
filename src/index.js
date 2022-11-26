@@ -1,18 +1,13 @@
-import express from "express";
-import bodyParser from "body-parser";
+const express = require("express");
+const routes = require("./routes");
 
 const app = express();
-
-app.use(bodyParser.json());
-
 const port = 8080;
 
-app.get('/', (req,res) => {
-    return res.status(200).send({message:'Boas-vindas à API'})
-});
+routes(app);
 
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);
 })
 
-export default app;
+module.exports = app;
