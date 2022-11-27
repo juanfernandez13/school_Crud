@@ -1,4 +1,4 @@
-import database from '../models';
+const database = require('../models');
 
 class PessoaController {
     static async getAllPeople(req,res){
@@ -12,4 +12,4 @@ class PessoaController {
     }
 }
 
-export default PessoaController;
+module.exports = PessoaController;
