@@ -21,10 +21,22 @@ class PessoaController {
     }
     
     static async createPerson(req,res){
+        const newPerson = req.body;
         try{
-            const newPerson = req.body;
             const newPersonCreate = await database.Pessoas.create(newPerson);
             return res.status(200).json(newPersonCreate); 
+        } catch (error) {
+            res.status(500).json(error.message);
+        }
+    }
+    
+    static async updatePerson(req,res){
+        const {id} = req.params;
+        const newPerson = req.body;
+        try{
+            await database.Pessoas.update( newPerson, {where: {id: Number(id)}} );
+            const newPersonUpdate = await database.Pessoas.findOne( {where: {id: Number(id)}});
+            return res.status(200).json(newPersonUpdate); 
         } catch (error) {
             res.status(500).json(error.message);
         }
