@@ -1,11 +1,11 @@
 const { Router } = require('express')
-const NivelController = require('../controllers/NivelController')
+const TurmaController = require('../controllers/TurmaController')
 
 const router = Router()
 router
- .get('/niveis', NivelController.pegaTodosOsNiveis)
- .get('/niveis/:id', NivelController.pegaUmNivel)
- .post('/niveis', NivelController.criaNivel)
- .put('/niveis/:id', NivelController.atualizaNivel)
- .delete('/niveis/:id', NivelController.apagaNivel)
+ .get('/turmas', TurmaController.pegaTodasAsTurmas)
+ .get('/turmas/:id', TurmaController.pegaUmaTurma)
+ .post('/turmas', TurmaController.criaTurma)
+ .put('/turmas/:id', TurmaController.atualizaTurma)
+ .delete('/turmas/:id', TurmaController.apagaTurma)
 module.exports = router
