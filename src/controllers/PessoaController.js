@@ -1,57 +1,60 @@
-const database = require('../models');
+const database = require("../models");
 
 class PessoaController {
-    static async getAllPeople(req,res){
-        try{
-            const allPeople = await database.Pessoas.findAll();
-            return res.status(200).json(allPeople); 
-        } catch (error) {
-            res.status(500).json(error.message);
-        }
-    }
-    
-    static async getPerson(req,res){
-        try{
-            const {id} = req.params;
-            const Person = await database.Pessoas.findOne( {where: {id: Number(id)}});
-            return res.status(200).json(Person); 
-        } catch (error) {
-            res.status(500).json(error.message);
-        }
-    }
-    
-    static async createPerson(req,res){
-        const newPerson = req.body;
-        try{
-            const newPersonCreate = await database.Pessoas.create(newPerson);
-            return res.status(200).json(newPersonCreate); 
-        } catch (error) {
-            res.status(500).json(error.message);
-        }
-    }
-    
-    static async updatePerson(req,res){
-        const {id} = req.params;
-        const newPerson = req.body;
-        try{
-            await database.Pessoas.update( newPerson, {where: {id: Number(id)}} );
-            const newPersonUpdate = await database.Pessoas.findOne( {where: {id: Number(id)}});
-            return res.status(200).json(newPersonUpdate); 
-        } catch (error) {
-            res.status(500).json(error.message);
-        }
-    }
-    
-    static async deletePerson(req,res){
-        const {id} = req.params;
-        try{
-            await database.Pessoas.destroy({where: {id: Number(id)}} );
-            
-            return res.status(200).send({message:"Pessoa excluida com sucesso"}); 
-        } catch (error) {
-            res.status(500).json(error.message);
-        }
-    }
+   static async pegaTodasAsPessoas(req, res) {
+      try {
+         const todasAsPessoas = await database.Pessoas.findAll();
+         return res.status(200).json(todasAsPessoas);
+      } catch (error) {
+         return res.status(500).json(error.message);
+      }
+   }
+
+   static async pegaUmaPessoa(req, res) {
+      const { id } = req.params;
+      try {
+         const umaPessoa = await database.Pessoas.findOne({
+            where: {
+               id: Number(id)
+            }
+         });
+         return res.status(200).json(umaPessoa);
+      } catch (error) {
+         res.status(500).json(error.message);
+      }
+   }
+
+   static async criaPessoa(req, res) {
+      const novaPessoa = req.body;
+      try {
+         const novaPessoaCriada = await database.Pessoas.create(novaPessoa);
+         return res.status(201).json(novaPessoaCriada);
+      } catch (error) {
+         res.status(500).json(error.message);
+      }
+   }
+
+   static async atualizaPessoa(req, res) {
+      const { id } = req.params;
+      const novasInfo = req.body;
+      try {
+         await database.Pessoas.update(novasInfo, {where: {id: Number(id)}});
+         const pessoaAtualizada = await database.Pessoas.findOne({where: {id: Number(id)}})
+         return res.status(200).json(pessoaAtualizada);
+      } catch (error) {
+         return res.status(500).json(error.message);
+      }
+   }
+
+   static async apagaPessoa(req, res) {
+      const { id } = req.params;
+      try {
+         await database.Pessoas.destroy({where: {id: Number(id)}});
+         return res.status(200).json({message: `id ${id} deletado com sucesso`})
+      } catch (error) {
+         return res.status(500).json(error.message);
+      }
+   }
 }
 
 module.exports = PessoaController;
